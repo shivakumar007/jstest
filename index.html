@@ -1,171 +1,311 @@
 <!DOCTYPE html>
 <html>
 <style type="text/css">
-#complete{ /*complete all tasks font-style*/
-  margin-left:75px;
-  color:#888;
-}
-#Clear{   /*clear completed font-style*/
-  margin-left:53%;
-  color:#888;
-}
-body{ /*complete background colour*/
-  background-color:#888;
-}
-#main{ /*background colour to white*/
-  height:100%;
-  width:100%;
-  Background-color:white;
-  border-radius:5px;
-}
-ul li { /*list items style */
-  cursor:pointer;
-  position: relative;
-  padding:12px 8px 12px 40px;
-   /* background: #eee;  */
-  font-size:18px;
-  width:67%;
-}
-.del {/*delete icon*/
-  content:'\u00D7';
-  color:white;
-  position:absolute;
-  right:0;
-  top:0;
-  padding:12px 16px 12px 16px;
-}
-.del:hover { 
-  content:'\u00D7';
-  display:block;
-  color:black;
-  border-radius:50%;
-  border:2px solid black;
-}
-.header {  /*header box styling*/
-  padding:30px 40px;
-  color:white;
-  text-align:center;
-}
-.header:after {
-  content:"";
-  display:table;
-  clear: both; 
-}
-input { /*input style*/
-  margin:0;
-  border:none;
-  border-radius:5px;
-  background-color:#eee;
-  width:75%;
-  height:50px;
-  padding:10px;
-  float:left;
-  font-size:30px;
-}
-.add{ /*add button*/
-  padding:10px;
-  width:10%;
-  background: #d9d9d9;
-  color: #555;
-  float:left;
-  text-align:center;
-  font-size:16px;
-  cursor:pointer;
-  border-radius:5px;
-  margin:15px;
-}
-.add:hover {
-  background-color: #bbb;
-}
-#count{ /*items left count style*/
-  margin-left:45px;
-}
-#task{ 
-  color:#888;
-}
-#all{
-  margin-left:57%;
-}
-#com{
-  color:#888;
-}
+  h1{
+    text-align: center;
+    margin-top: 5%;
+    font-size: 3rem;
+    font-family: monospace;
+    font-weight: 900;
+    color: rgb(114, 110, 110);
+    margin-bottom: 0%;
+    }
+    #heading{
+        margin-bottom: 0%;
+    }
+    body{
+        background-color: rgb(192, 205, 218);
+    }
+    /* complete to do box */
+    #box{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3%;
+        width: 70vw;
+        border-radius: 25px;
+        box-shadow: 0px 0px 14px 7px grey;
+        background-color: white;
+        padding: 1%;
+    }
+    
+    /* Input Container */
+    #input-container{
+        
+        padding: 2%;
+        margin: 2%;
+        border-radius: 25px;
+         font-size: 2em;
+         background-color: rgb(229, 226, 226);
+        border: none;
+        
+    }
+    #input-container:hover{
+        background-color: rgba(182, 176, 176, 0.548);
+    }
+    #input{
+        width: auto;
+        border: none;
+        font-size: inherit;
+        background-color:inherit;
+    }
+    #input :checked{
+        border: none;
+    }
+    .label{
+        display: inline-block;
+    }
+    #add{
+        float: right ;
+        cursor: pointer;
+    }
+    /* clear and complete buttons */
+    #clear-complete{
+        font-size: 1.2rem;
+        width: 100%;;
+        margin: 0%;;
+        
+        font-family: monospace;
+        color: rgb(179, 175, 175);
+    }
+    #clear-all{
+        float: right;
+        cursor: pointer;
+        
+    }
+    #complete-all{
+        cursor: pointer;
+    }
+    /* Task List */
+    #all-task{
+        font-size: 2rem;
+        font-family: sans-serif;
+        letter-spacing: 2px;
+    }
+    #list li{
+        transition: all 0.5s;
+        width: 100%;
+        margin-top: 1%;
+    }
+    .delete {
+        float: right;
+        margin-right: 7%;
+        font-size: 1.5rem;
+        padding: 1%;
+        color: black !important;
+    
+        /* display: none; */
+    }
+    #list li:hover{
+        color: rgb(206, 201, 201);
+        cursor: pointer;
+        
+    }
+    
+    .delete:hover{
+        background-color: rgb(223, 86, 86);
+        z-index: 1;
+    }
+    
+    #list li.checked{
+        text-decoration: line-through;
+    }
+    /* Last section of task Info */
+    #task-info{
+        font-family: monospace;
+        color: rgb(179, 175, 175);
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+    }
+    #task-info p{
+    display: inline;
+    }
+    #task-type ul{
+        display: inline;
+        
+    }
+    #task-type li{
+        display: inline;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 600px) {
+        #box{
+            height: auto;
+            width: auto;
+        }
+        #input-container #file{
+            display: none;
+        }
+        #input-container{
+            /* max-width: inherit; */
+            font-size: .8rem;
+        }
+        #clear-all{
+            /* display: block; */
+        }
+        #complete-all{
+            /* display: block; */
+            float: none;
+        }
+        hr{
+            display: block;
+        }
+      }
 </style>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <div id="main">
-    <div id="myDIV" class="header">
-        <input type="text" id="input" placeholder="Type Your todo list">
-        <span onclick="newElement()" class="add">add</span>
-      </div>
-      <div><span id="complete">Complete all tasks</span>
-            <span id="Clear">Clear Completed</span>
-      </div>
-      <hr>
-      <ul type="circle" id="list">
-        <li>Learn how to use Vue.js</li>
-        <li>Drink coffee</li>
-        <li>Wakeup at 5 a.m</li>
-      </ul>
-      <hr>
-      <div>
-      <span id="count">3 </span><span id="task">tasks left</span>
-      <span id="all">All</span>
-      <span id="com">Uncomplete Complete</span>
+    <div id="box">
+    <div id="input-container">
+        <input type="text" id="input"placeholder=" Type your list ..." ic>
+        <i id="add" aria-hidden="true" onclick="addTask()">Add</i>
     </div>
-  </div>
+    <div id="clear-complete">
+        <span id="complete-all" onclick="completeAll()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Complete All task</span>
+        <span id="clear-all" onclick="clearCompleted()"> Clear completed</span>
+    </div>
+    <hr>
+    <div id="all-task">
+                <ul id="list">
+                    
+                </ul>
+    </div>
+    <hr>
+    <div id="task-info">
+       <p ><span id="task-left">0</span> tasks left</p>
+        <ul id="task-type">
+            <li onclick="showAll()">
+                <strong style="color: rgb(148, 139, 139);">All</strong>
+            </li>
+            <li onclick="showIncomplete()">
+                Incomplete
+            </li>
+            <li onclick="showCompleted()">
+                Completed
+            </li>
+        </ul>
+    </div>    
+</div>
 <script type="text/javascript">
-var l=document.getElementsByTagName("li");
+  var currentTasks=0;
+//List of the buttons to delete an element
+var deleteElements = document.getElementsByClassName("delete");
 var i;
-r=3;
-for (i=0;i<l.length;i++) {
-  var s=document.createElement("SPAN");
-  var t=document.createTextNode("\u00D7");
-  s.className="del";
-  s.appendChild(t);
-  l[i].appendChild(s);
-}
-function newElement() {     // Adding new item
-  var li=document.createElement("li");
-  var iv=document.getElementById("input").value;
-  var t=document.createTextNode(iv);
-  li.appendChild(t);
-  if(iv==='') {
-    alert("You must write something!");
-  } 
-  else{
-    document.getElementById("list").appendChild(li);
-    r++;
-  }
-  document.getElementById("input").value = "";
-  var s=document.createElement("SPAN");
-  var t=document.createTextNode("\u00D7");
-  s.className = "del";
-  s.appendChild(t);
-  li.appendChild(s);
-  for(i=0;i<c.length;i++) {
-    c[i].onclick=function() {
-      var div=this.parentElement;
-      div.style.display="none";
-      r--;
-      var cc=document.getElementById('count');
-  cc.innerText=r+' ';
+for (i = 0; i < deleteElements.length; i++) {
+    deleteElements[i].onclick = function() {
+        currentTasks--;
+        document.getElementById('task-left').innerText=currentTasks;
+        document
+        var parent = this.parentElement;
+        parent.style.display = "none";
+        
     }
-  }
-  var cc=document.getElementById('count');
-  cc.innerText=r+' ';
+}
+function addTask(){
+    var li=document.createElement("li");
+    var task =document.getElementById('input').value;
+    var item = document.createTextNode(task);
+    var i = document.createElement("i");
+    i.classList.add('delete');
+    i.classList.add('fa');
+    i.classList.add('fa-times');
+    li.appendChild(item);
+    li.appendChild(i);
+    if(li.innerText==""){
+        alert("Enter task to be added");
+    }else{
+        document.getElementById('list').appendChild(li);
+        currentTasks++;
+        document.getElementById('task-left').innerText=currentTasks;
+    }
+    document.getElementById('input').value="";
+    
+    
+
+    //List of the buttons to delete an element
+    for (i = 0; i < deleteElements.length; i++) {
+        deleteElements[i].onclick = function() {
+            var parent = this.parentElement;
+            parent.style.display = "none";
+            currentTasks--;
+            document.getElementById('task-left').innerText=currentTasks;
+        }
+    }
 }
 
-var c=document.getElementsByClassName("del");
-var i;
-for (i=0;i<c.length;i++) {
-  c[i].onclick=function() {  //deleting list item
-    var div=this.parentElement;
-    div.style.display="none";
-    r--;
-    var cc=document.getElementById('count');
-  cc.innerText=r+' ';
-  }
+       
+
+    //Marking a list item as done for current object
+        var list = document.querySelector('#list');
+        list.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            event.target.classList.toggle('checked');
+        }
+        }, false);
+
+    // Marking all tasks complete
+function completeAll(){
+    var tasks = document.querySelectorAll('#list li');
+    for(let i=0;i<tasks.length;i++){
+            if(tasks[i].className!='checked'){
+                tasks[i].classList.add('checked');
+            }
+    }
+}
+    //clearing all tasks that are done
+function clearCompleted(){
+
+    var tasks = document.querySelectorAll('#list li');
+        for(let i=0;i<tasks.length;i++){
+                if(tasks[i].className=='checked' && tasks[i].style.display!='none'){
+                    console.log(tasks[i].style.display!="none");
+                    
+                        currentTasks--; 
+                        
+                    
+                        tasks[i].style.display='none';
+                    
+                }
+                
+        }
+        document.getElementById('task-left').innerText=currentTasks;
+        
+}
+
+// function to show incomplete tasks
+function showIncomplete(){
+    var tasks = document.querySelectorAll('#list li');
+    for(let i=0;i<tasks.length;i++){
+        if(tasks[i].className=='checked'){
+            tasks[i].style.visibility='hidden';
+           
+        }else{
+            tasks[i].style.visibility='visible';
+        }
+        
+    }
+}
+//function to show completed tasks
+function showCompleted(){
+    var tasks = document.querySelectorAll('#list li');
+    for(let i=0;i<tasks.length;i++){
+        if(tasks[i].className!='checked'){
+            tasks[i].style.visibility='hidden';
+
+        }else{
+            tasks[i].style.visibility='visible';
+        }
+        
+    }
+}
+//function to show all
+function showAll(){
+    var tasks = document.querySelectorAll('#list li');
+    for(let i=0;i<tasks.length;i++){
+        tasks[i].style.visibility='visible';
+        
+    }
 }
 </script>
 </body>
